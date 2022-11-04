@@ -78,6 +78,7 @@ void Demo::Render() {
 	
 	// DrawColoredCube();
 	DrawTable();
+	DrawChair();
 
 	DrawColoredPlane();
 
@@ -272,6 +273,87 @@ void Demo::DrawTable()
 			glm::mat4 model2;
 			model2 = glm::translate(model2, glm::vec3(0, 1.4, 0));
 			model2 = glm::scale(model2, glm::vec3(1.85, .2, 1.85));
+
+			glGetUniformLocation(this->shaderProgram, "model");
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model2));
+
+			glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+		}
+	}
+	glBindVertexArray(0);
+}
+
+void Demo::DrawChair()
+{
+	UseShader(shaderProgram);
+
+	glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+
+	GLint objectColorLoc = glGetUniformLocation(this->shaderProgram, "objectColor");
+	glUniform3f(objectColorLoc, 0.4f, 0.2f, 0);
+
+	glm::mat4 model;
+	model = glm::translate(model, glm::vec3(1, 0, 0));
+	model = glm::scale(model, glm::vec3(0.5f, 2, 0.5f));
+
+	GLint modelLoc = glGetUniformLocation(this->shaderProgram, "model");
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+	// glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
+	for (int x = 0; x < 3; x++) {
+		if (x == 0) {
+			// Kaki Kursi
+			for (int i = 0; i < 2; i++) {
+				float j = i + 1.5;
+				objectColorLoc = glGetUniformLocation(this->shaderProgram, "objectColor");
+				glUniform3f(objectColorLoc, 0.4f, 0.2f, 0);
+
+				glm::mat4 model2;
+				model2 = glm::translate(model2, glm::vec3(j * 1.2, 0, -0.5));
+				model2 = glm::scale(model2, glm::vec3(0.2, 1, 0.2));
+
+				glGetUniformLocation(this->shaderProgram, "model");
+				glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model2));
+
+				glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+			}
+
+			for (int i = 0; i < 2; i++) {
+				float j = i + 1.5;
+				objectColorLoc = glGetUniformLocation(this->shaderProgram, "objectColor");
+				glUniform3f(objectColorLoc, 0.4f, 0.2f, 0);
+
+				glm::mat4 model2;
+				model2 = glm::translate(model2, glm::vec3(j * 1.2, 0, -2));
+				model2 = glm::scale(model2, glm::vec3(0.2, 4, 0.2));
+
+				glGetUniformLocation(this->shaderProgram, "model");
+				glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model2));
+
+				glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+			}
+		}
+		else if (x == 1) {
+			objectColorLoc = glGetUniformLocation(this->shaderProgram, "objectColor");
+			glUniform3f(objectColorLoc, 0.4f, 0.2f, 0);
+
+			glm::mat4 model2;
+			model2 = glm::translate(model2, glm::vec3(2, 0.8, 0));
+			model2 = glm::scale(model2, glm::vec3(1.2, .2, 1.5));
+
+			glGetUniformLocation(this->shaderProgram, "model");
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model2));
+
+			glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+		}
+		else {
+			objectColorLoc = glGetUniformLocation(this->shaderProgram, "objectColor");
+			glUniform3f(objectColorLoc, 0.4f, 0.2f, 0);
+
+			glm::mat4 model2;
+			model2 = glm::translate(model2, glm::vec3(2.4, 1.7, -2));
+			model2 = glm::scale(model2, glm::vec3(1.4, 0.7, .2));
 
 			glGetUniformLocation(this->shaderProgram, "model");
 			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model2));
